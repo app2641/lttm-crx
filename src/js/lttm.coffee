@@ -20,6 +20,7 @@ atwhoOptions =
         task2 = $.getJSON("https://d1zktzrq1775k6.cloudfront.net/g?" + Math.random()).then()
         task3 = $.getJSON("https://d1zktzrq1775k6.cloudfront.net/g?" + Math.random()).then()
         $.when(task1, task2, task3).then (a, b, c) ->
+          console.log(a, b, c)
           images = _.map([
             a[0]
             b[0]
@@ -121,6 +122,24 @@ atwhoOptions =
               imageUrl: js_girl.url
               imagePreviewUrl: js_girl.url
               alt: "JS Girls:#{js_girl.keywords[0]}"
+          )
+          callback images
+      else if kind is 'k'
+        task1 = $.get('http://looks-kawaii-to-me.tumblr.com/random').then()
+        task2 = $.get('http://looks-kawaii-to-me.tumblr.com/random').then()
+        task3 = $.get('http://looks-kawaii-to-me.tumblr.com/random').then()
+        $.when(task1, task2, task3).then (res_a, res_b, res_c) ->
+          images = []
+          _.each([res_a, res_b, res_c], (res) ->
+            img = $(res[0]).find('div.post-content div.photo div.photo-wrapper img')
+            url = img.attr('src')
+
+            images.push({
+              name:            url
+              imageUrl:        url
+              imagePreviewUrl: url
+              alt: "LGTM"
+            })
           )
           callback images
 
